@@ -1,18 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="@android:color/white">
 
+    <!-- Time and Date -->
     <TextView
+        android:id="@+id/dateTimeText"
+        android:text="Loading..."
+        android:layout_marginBottom="16dp"
+        android:textSize="16sp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Weather -->
+    <TextView
+        android:id="@+id/weatherText"
+        android:text="Weather: --"
+        android:textSize="16sp"
+        android:layout_marginBottom="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/titleText"
+        android:text="How are you feeling?"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!-- Mood Buttons (Use emojis for now) -->
+<!--    <LinearLayout-->
+<!--        android:orientation="horizontal"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <Button-->
+<!--            android:id="@+id/mood1"-->
+<!--            style="?android:attr/buttonBarButtonStyle"-->
+<!--            android:layout_width="100px"-->
+<!--            android:layout_height="100px"-->
+<!--            android:background="#E91E63"-->
+<!--            android:text="😊" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/mood2"-->
+<!--            style="?android:attr/buttonBarButtonStyle"-->
+<!--            android:layout_width="100px"-->
+<!--            android:layout_height="100px"-->
+<!--            android:background="#E91E63"-->
+<!--            android:text="😐" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/mood3"-->
+<!--            style="?android:attr/buttonBarButtonStyle"-->
+<!--            android:layout_width="100px"-->
+<!--            android:layout_height="100px"-->
+<!--            android:background="#F44336"-->
+<!--            android:text="😢" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/mood4"-->
+<!--            style="?android:attr/buttonBarButtonStyle"-->
+<!--            android:layout_width="100px"-->
+<!--            android:layout_height="100px"-->
+<!--            android:background="#009688"-->
+<!--            android:text="😠" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/mood5"-->
+<!--            style="?android:attr/buttonBarButtonStyle"-->
+<!--            android:layout_width="100px"-->
+<!--            android:layout_height="100px"-->
+<!--            android:background="#009688"-->
+<!--            android:text="🤩" />-->
+
+<!--    </LinearLayout>-->
+    <LinearLayout
+        android:id="@+id/moodButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="16dp">
+
+        <ImageButton
+            android:id="@+id/btnExcited"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:src="@drawable/excited_icon"
+            android:contentDescription="Excited"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:padding="8dp"/>
+
+        <ImageButton
+            android:id="@+id/btnHappy"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:src="@drawable/happy_icon"
+            android:contentDescription="Happy"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:padding="8dp"/>
+
+        <ImageButton
+            android:id="@+id/btnMeh"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:src="@drawable/meh_icon"
+            android:contentDescription="Meh"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:padding="8dp"/>
+
+        <ImageButton
+            android:id="@+id/btnSad"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:src="@drawable/sad_icon"
+            android:contentDescription="Sad"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:padding="8dp"/>
+
+        <ImageButton
+            android:id="@+id/btnUpset"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:src="@drawable/upset_icon"
+            android:contentDescription="Upset"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:padding="8dp"/>
+    </LinearLayout>
+
+</LinearLayout>
