@@ -1,17 +1,23 @@
 package my.edu.utar.assignment2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ImageButton btnExcited, btnHappy, btnMeh, btnSad, btnUpset;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // --------------------- Home screen time and date ---------------------
         TextView dayText = findViewById(R.id.dayText);
         TextView dateText = findViewById(R.id.dateText);
         TextView timeText = findViewById(R.id.timeText);
@@ -40,6 +46,53 @@ public class MainActivity extends AppCompatActivity {
         dayText.setText(formattedDay);
         timeText.setText(formattedTime);
         dateText.setText(String.valueOf(day));
+
+        // --------- mood button click -----------
+        btnExcited = findViewById(R.id.btnExcited);
+        btnHappy = findViewById(R.id.btnHappy);
+        btnMeh = findViewById(R.id.btnMeh);
+        btnSad = findViewById(R.id.btnSad);
+        btnUpset = findViewById(R.id.btnUpset);
+
+        // Set click listener for Excited button
+        btnExcited.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMoodLoggingActivity(R.drawable.excited_icon); // Pass excited icon
+            }
+        });
+
+        // Set click listener for Happy button
+        btnHappy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMoodLoggingActivity(R.drawable.happy_icon); // Pass happy icon
+            }
+        });
+        btnMeh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMoodLoggingActivity(R.drawable.meh_icon); // Pass happy icon
+            }
+        });
+        btnSad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMoodLoggingActivity(R.drawable.sad_icon); // Pass happy icon
+            }
+        });
+        btnUpset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMoodLoggingActivity(R.drawable.upset_icon); // Pass happy icon
+            }
+        });
+
+    }
+    private void openMoodLoggingActivity(int iconResId) {
+        Intent intent = new Intent(MainActivity.this, MoodLogging.class);
+        intent.putExtra("mood_icon", iconResId); // Pass the icon resource ID
+        startActivity(intent);
     }
 
 }
