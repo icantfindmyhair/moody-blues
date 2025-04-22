@@ -4,23 +4,42 @@ import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
-
-    private TextView dateTimeText;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dateTimeText = findViewById(R.id.dateTimeText);
+        TextView dayText = findViewById(R.id.dayText);
+        TextView dateText = findViewById(R.id.dateText);
+        TextView timeText = findViewById(R.id.timeText);
+        TextView yearText = findViewById(R.id.yearText);
+        TextView monthText = findViewById(R.id.monthText);
 
-        // Set current date and time
-        String currentDateTime = new SimpleDateFormat("EEEE, MMM d yyyy\nhh:mm a", Locale.getDefault()).format(new Date());
-        dateTimeText.setText(currentDateTime);
+        Calendar calendar = Calendar.getInstance();
+
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+        String[] dayNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
+                "Friday", "Saturday"};
+        String[] monthNames = {"January", "February", "March", "April", "May", "June", "July", "August",
+                "September", "October","November","December"};
+        String formattedDay = dayNames[dayOfWeek - 1];
+        String formattedMonth = monthNames[month];
+        String formattedTime = String.format("%02d:%02d", hour, minute);
+
+        yearText.setText(String.valueOf(year));
+        monthText.setText(formattedMonth);
+        dayText.setText(formattedDay);
+        timeText.setText(formattedTime);
+        dateText.setText(String.valueOf(day));
     }
+
 }
