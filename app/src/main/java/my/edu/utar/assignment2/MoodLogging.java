@@ -6,12 +6,16 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MoodLogging extends AppCompatActivity {
     private ImageView moodIcon;
     private EditText moodInput;
+    private TextView moodText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,10 +24,22 @@ public class MoodLogging extends AppCompatActivity {
 
         moodIcon = findViewById(R.id.moodIcon);
         moodInput = findViewById(R.id.moodInput);
+        moodText = findViewById(R.id.moodText);
 
-        // Get the image resource passed through the Intent
         Intent intent = getIntent();
-        int iconResId = intent.getIntExtra("mood_icon", R.drawable.excited_icon); // Default to excited icon
+        int iconResId = intent.getIntExtra("mood_icon", R.drawable.excited_icon);
+        String text = intent.getStringExtra("mood_text");
+
         moodIcon.setImageResource(iconResId);
+        moodText.setText(text);
+
+        ImageButton backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 }

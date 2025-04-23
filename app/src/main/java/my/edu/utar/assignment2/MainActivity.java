@@ -54,44 +54,43 @@ public class MainActivity extends AppCompatActivity {
         btnSad = findViewById(R.id.btnSad);
         btnUpset = findViewById(R.id.btnUpset);
 
-        // Set click listener for Excited button
         btnExcited.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMoodLoggingActivity(R.drawable.excited_icon); // Pass excited icon
+                openMoodLoggingActivity(R.drawable.excited_icon, "Yippee! :D");
             }
         });
 
-        // Set click listener for Happy button
         btnHappy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMoodLoggingActivity(R.drawable.happy_icon); // Pass happy icon
+                openMoodLoggingActivity(R.drawable.happy_icon, "Yay! :)");
             }
         });
         btnMeh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMoodLoggingActivity(R.drawable.meh_icon); // Pass happy icon
+                openMoodLoggingActivity(R.drawable.meh_icon, "Meh :/");
             }
         });
         btnSad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMoodLoggingActivity(R.drawable.sad_icon); // Pass happy icon
+                openMoodLoggingActivity(R.drawable.sad_icon, "Awwww :(");
             }
         });
         btnUpset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMoodLoggingActivity(R.drawable.upset_icon); // Pass happy icon
+                openMoodLoggingActivity(R.drawable.upset_icon,"Oh no :(");
             }
         });
 
     }
-    private void openMoodLoggingActivity(int iconResId) {
+    private void openMoodLoggingActivity(int iconResId, String moodText) {
         Intent intent = new Intent(MainActivity.this, MoodLogging.class);
-        intent.putExtra("mood_icon", iconResId); // Pass the icon resource ID
+        intent.putExtra("mood_icon", iconResId);
+        intent.putExtra("mood_text", moodText);
         startActivity(intent);
     }
 

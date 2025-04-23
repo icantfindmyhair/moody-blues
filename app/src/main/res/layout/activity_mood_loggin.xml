@@ -1,31 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    tools:context=".MoodLogginActivity">-->
-
-<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:backgroundTint="#F44336"
     android:gravity="center"
+    android:orientation="vertical"
     android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/moodIcon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:contentDescription="Mood Icon"
-        android:src="@drawable/excited_icon" /> <!-- Default icon, will be changed dynamically -->
+    <!-- Rounded frame -->
 
-    <EditText
-        android:id="@+id/moodInput"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Type your mood"
-        android:padding="16dp" />
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/back_icon" />
+
+        <Space
+            android:layout_width="300dp"
+            android:layout_height="70dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/moodIcon"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:contentDescription="Mood Icon"
+            android:src="@drawable/excited_icon" />
+
+        <TextView
+            android:id="@+id/moodText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="4dp"
+            android:text="Mood"
+            android:textSize="25sp" />
+
+        <EditText
+            android:id="@+id/moodInput"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:background="#FFFFFF"
+            android:hint="How are you feeling?"
+            android:gravity="top|start"
+            android:padding="16dp"
+            android:maxLength="700"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/doneButton"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#ff444054"
+        android:text="Done"
+        android:textColor="#ffffe3"
+        android:textSize="20sp"
+        app:cornerRadius="10dp" />
+
 </LinearLayout>
