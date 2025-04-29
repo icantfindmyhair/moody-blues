@@ -2,12 +2,19 @@ package my.edu.utar.assignment2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Calendar;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -86,6 +93,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Weather
+
+        TextView weatherText = findViewById(R.id.weatherText);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.openweathermap.org/data/2.5/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        WeatherService service = retrofit.create(WeatherService.class);
+        Call<WeatherResponse> call = service.getCurrentWeather("Kampar","35b04f55b9246cc3c767a61402f3f868","metric");
+        call.enqueue(new Callback<WeatherResponse>() {
+            @Override
+            public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
+                if (response.isSuccessful()){
+                    WeatherResponse weather = response.body();
+                    if (weather!=null){
+                        double temp = weather.main.temp;
+                        String description = weather.weather.get(0).description;
+                        String weatherInfo = "Weather: " + description + "," + temp + "C";
+                        weatherText.setText(weatherInfo);
+                    }
+                    else {
+                        weatherText.setText("Failed to get weather.");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WeatherResponse> call, Throwable t) {
+                Log.e("Weather","Error: " + t.getMessage());
+                weatherText.setText("Error loading weather.");
+            }
+        });
+
     }
     private void openMoodLoggingActivity(int iconResId, String moodText) {
         Intent intent = new Intent(MainActivity.this, MoodLogging.class);
@@ -93,5 +133,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("mood_text", moodText);
         startActivity(intent);
     }
+
+    //test
 
 }
