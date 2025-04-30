@@ -125,6 +125,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ImageButton btnCalendar = findViewById(R.id.btnCalendar);
+        btnCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     private void openMoodLoggingActivity(int iconResId, String moodText) {
         Intent intent = new Intent(MainActivity.this, MoodLogging.class);
@@ -133,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //test
+
+
 
 }
