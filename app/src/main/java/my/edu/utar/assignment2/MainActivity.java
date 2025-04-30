@@ -93,8 +93,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Weather
-
+        //WeatherAPI
         TextView weatherText = findViewById(R.id.weatherText);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.openweathermap.org/data/2.5/")
