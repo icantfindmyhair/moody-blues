@@ -7,7 +7,6 @@
     android:background="#FF444054">
 
     <ImageView
-        android:id="@+id/logoImageView"
         android:paddingTop="100dp"
         android:layout_width="300dp"
         android:layout_height="300dp"
