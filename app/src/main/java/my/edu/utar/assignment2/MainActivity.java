@@ -61,37 +61,21 @@ public class MainActivity extends AppCompatActivity {
         btnSad = findViewById(R.id.btnSad);
         btnUpset = findViewById(R.id.btnUpset);
 
-        btnExcited.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMoodLoggingActivity(R.drawable.excited_icon, "Yippee! :D");
-            }
-        });
-
-        btnHappy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMoodLoggingActivity(R.drawable.happy_icon, "Yay! :)");
-            }
-        });
-        btnMeh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMoodLoggingActivity(R.drawable.meh_icon, "Meh :/");
-            }
-        });
-        btnSad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMoodLoggingActivity(R.drawable.sad_icon, "Awwww :(");
-            }
-        });
-        btnUpset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMoodLoggingActivity(R.drawable.upset_icon,"Oh no :(");
-            }
-        });
+        btnExcited.setOnClickListener(v ->
+                openMoodLoggingActivity(R.drawable.excited_icon, "Yippee! :D", "excited")
+        );
+        btnHappy.setOnClickListener(v ->
+                openMoodLoggingActivity(R.drawable.happy_icon, "Yay! :)", "happy")
+        );
+        btnMeh.setOnClickListener(v ->
+                openMoodLoggingActivity(R.drawable.meh_icon, "Meh :/", "meh")
+        );
+        btnSad.setOnClickListener(v ->
+                openMoodLoggingActivity(R.drawable.sad_icon, "Awwww :(", "sad")
+        );
+        btnUpset.setOnClickListener(v ->
+                openMoodLoggingActivity(R.drawable.upset_icon, "Oh no :(", "upset")
+        );
 
         //WeatherAPI
         TextView weatherText = findViewById(R.id.weatherText);
@@ -134,13 +118,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private void openMoodLoggingActivity(int iconResId, String moodText) {
+    private void openMoodLoggingActivity(int iconResId, String moodText, String moodKey) {
         Intent intent = new Intent(MainActivity.this, MoodLogging.class);
         intent.putExtra("mood_icon", iconResId);
         intent.putExtra("mood_text", moodText);
+        intent.putExtra("EXTRA_MOOD_KEY", moodKey);
         startActivity(intent);
     }
-
 
 
 

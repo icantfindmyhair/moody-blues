@@ -19,6 +19,12 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    packagingOptions {
+        resources {
+            // Pick just one copy of META-INF/DEPENDENCIES and ignore the rest
+            pickFirsts += ['META-INF/DEPENDENCIES']
+        }
+    }
 
     buildTypes {
         release {
@@ -45,4 +51,13 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.applandeo:material-calendar-view:1.9.0-rc03'
+    // Spotify Authentication SDK
+    implementation 'com.spotify.android:auth:1.2.5'
+    implementation 'se.michaelthelin.spotify:spotify-web-api-java:7.0.0'
+    // Browser Custom Tabs
+    implementation 'androidx.browser:browser:1.5.0'
+
+    // OkHttp + logging
+    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
 }
