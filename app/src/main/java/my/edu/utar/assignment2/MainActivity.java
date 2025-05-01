@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        String weatherDesc;
 
         String[] dayNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday",
                 "Friday", "Saturday"};
@@ -61,21 +62,6 @@ public class MainActivity extends AppCompatActivity {
         btnSad = findViewById(R.id.btnSad);
         btnUpset = findViewById(R.id.btnUpset);
 
-        btnExcited.setOnClickListener(v ->
-                openMoodLoggingActivity(R.drawable.excited_icon, "Yippee! :D", "excited")
-        );
-        btnHappy.setOnClickListener(v ->
-                openMoodLoggingActivity(R.drawable.happy_icon, "Yay! :)", "happy")
-        );
-        btnMeh.setOnClickListener(v ->
-                openMoodLoggingActivity(R.drawable.meh_icon, "Meh :/", "meh")
-        );
-        btnSad.setOnClickListener(v ->
-                openMoodLoggingActivity(R.drawable.sad_icon, "Awwww :(", "sad")
-        );
-        btnUpset.setOnClickListener(v ->
-                openMoodLoggingActivity(R.drawable.upset_icon, "Oh no :(", "upset")
-        );
 
         //WeatherAPI
         TextView weatherText = findViewById(R.id.weatherText);
@@ -109,6 +95,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnExcited.setOnClickListener(v ->
+                openMoodLoggingActivity(R.drawable.excited_icon, "Yippee! :D", "excited", weatherText.getText().toString())
+        );
+        btnHappy.setOnClickListener(v ->
+                openMoodLoggingActivity(R.drawable.happy_icon, "Yay! :)", "happy", weatherText.getText().toString())
+        );
+        btnMeh.setOnClickListener(v ->
+                openMoodLoggingActivity(R.drawable.meh_icon, "Meh :/", "meh", weatherText.getText().toString())
+        );
+        btnSad.setOnClickListener(v ->
+                openMoodLoggingActivity(R.drawable.sad_icon, "Awwww :(", "sad", weatherText.getText().toString())
+        );
+        btnUpset.setOnClickListener(v ->
+                openMoodLoggingActivity(R.drawable.upset_icon, "Oh no :(", "upset", weatherText.getText().toString())
+        );
+
         ImageButton btnCalendar = findViewById(R.id.btnCalendar);
         btnCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,11 +120,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private void openMoodLoggingActivity(int iconResId, String moodText, String moodKey) {
+    private void openMoodLoggingActivity(int iconResId, String moodText, String moodKey, String weatherDesc) {
         Intent intent = new Intent(MainActivity.this, MoodLogging.class);
         intent.putExtra("mood_icon", iconResId);
         intent.putExtra("mood_text", moodText);
         intent.putExtra("EXTRA_MOOD_KEY", moodKey);
+        intent.putExtra("weather_desc", weatherDesc);
         startActivity(intent);
     }
 
