@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         TextView weatherTemp = findViewById(R.id.weatherTempText);
         ImageView weatherIcon = findViewById(R.id.weatherIcon);
         TextView weatherName = findViewById(R.id.weatherName);
+        ImageButton btnMusic = findViewById(R.id.btnMusic);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.openweathermap.org/data/2.5/")
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                         String iconURL = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
                         Glide.with(MainActivity.this).load(iconURL).into(weatherIcon);
 
-                        weatherIcon.setOnClickListener(view -> {
+                        btnMusic.setOnClickListener(view -> {
                             String mainWeather = weather.weather.get(0).main;
                             Intent intent = new Intent(MainActivity.this, GeneratingPlaylistActivity.class);
                             intent.putExtra("EXTRA_WEATHER_MAIN",mainWeather);
