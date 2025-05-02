@@ -4,8 +4,8 @@
 ### A group assignment for **UCCD3223 Mobile Application Development**
 **Group 20 - Phishermen**
 Members:
-Kong Zi Lin
-Steffi Yim Kar Mun
-Toh Yun Shuang
+- Kong Zi Lin
+- Steffi Yim Kar Mun
+- Toh Yun Shuang
 
 Let your feelings play ✨
