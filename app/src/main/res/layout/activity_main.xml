@@ -60,14 +60,14 @@
     <TextView
         android:id="@+id/weatherTempText"
         android:text="Temperature"
-        android:textSize="48sp"
+        android:textSize="30sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <ImageView
         android:id="@+id/weatherIcon"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
         android:contentDescription="WeatherIcon" />
 
     <TextView
