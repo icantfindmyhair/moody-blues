@@ -40,13 +40,24 @@ public class GeneratingPlaylistActivity extends AppCompatActivity {
     private OkHttpClient httpClient;
     private Random random = new Random();
 
+    //weather
+    private String weatherMain;
+    private boolean isWeatherPlaylist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generating_playlist);
 
         moodKey = getIntent().getStringExtra("EXTRA_MOOD_KEY");
-        Log.d(TAG, "Generating playlist for: " + moodKey);
+        //weather
+        weatherMain = getIntent().getStringExtra("EXTRA_WEATHER_MAIN");
+        isWeatherPlaylist = getIntent().getBooleanExtra("isWeatherPlaylist", false);
+
+        //Log.d(TAG, "Generating playlist for: " + moodKey);
+        Log.d(TAG, "Generating playlist for: " +
+                (isWeatherPlaylist ? "Weather: " + weatherMain : "Mood: " + moodKey));
+
 
         HttpLoggingInterceptor logg = new HttpLoggingInterceptor(msg -> Log.d("HTTP", msg));
         logg.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -114,7 +125,17 @@ public class GeneratingPlaylistActivity extends AppCompatActivity {
         Executors.newSingleThreadExecutor().execute(() -> {
             try {
                 // Pick a random keyword
-                List<String> keys = getKeywords(mood);
+                //List<String> keys = getKeywords(mood);
+
+                //make change for weather
+                List<String> keys;
+                if(isWeatherPlaylist){
+                    keys = getWeatherKeywords(weatherMain);
+                }
+                else {
+                    keys = getKeywords(mood);
+                }
+
                 String kw = keys.get(random.nextInt(keys.size()));
                 Log.d(TAG, "Searching playlists with keyword: " + kw);
 
@@ -183,6 +204,35 @@ public class GeneratingPlaylistActivity extends AppCompatActivity {
         map.put("sad",     Arrays.asList("sad","melancholy","acoustic"));
         map.put("upset",   Arrays.asList("angry","intense","rock"));
         return map.getOrDefault(mood, Arrays.asList(mood));
+    }
+
+    //weather
+    private List<String> getWeatherKeywords(String weatherMain){
+        switch (weatherMain.toLowerCase()){
+            case "thunderstorm":
+                return Arrays.asList("storm","epic","dramatic","intense");
+            case "drizzle":
+            case "rain":
+                return Arrays.asList("rainy","cozy","jazz","piano");
+            case "snow":
+                return Arrays.asList("winter","christmas","holiday","snow");
+            case "clear":
+                return Arrays.asList("sunny","happy","summer","uplifting");
+            case "clouds":
+                return Arrays.asList("cloudy","chill","lo-fi","ambient");
+            case "mist":
+            case "smoke":
+            case "haze":
+            case "dust":
+            case "fog":
+            case "sand":
+            case "ash":
+            case "squall":
+            case "tornado":
+                return Arrays.asList("mysterious","ambient","ethereal");
+            default:
+                return Arrays.asList("weather","mood","chill");
+        }
     }
 
     private String generateCodeVerifier() {
