@@ -49,6 +49,9 @@ public class GeneratingPlaylistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generating_playlist);
 
+        Button backButton = findViewById(R.id.cancelButton);
+        backButton.setOnClickListener(v -> finish());
+
         moodKey = getIntent().getStringExtra("EXTRA_MOOD_KEY");
         //weather
         weatherMain = getIntent().getStringExtra("EXTRA_WEATHER_MAIN");
