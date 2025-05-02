@@ -3,6 +3,7 @@ package my.edu.utar.assignment2;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,7 +38,6 @@ public class CalendarActivity extends AppCompatActivity {
         calendarView = findViewById(R.id.calendarView);
         selectedDateText = findViewById(R.id.selectedDateText);
 
-        // Handle date clicks
         calendarView.setOnDayClickListener(eventDay -> {
             Calendar clickedDay = eventDay.getCalendar();
 
@@ -68,7 +69,6 @@ public class CalendarActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("MoodLoggingPrefs", MODE_PRIVATE);
         String raw = prefs.getString("history", "[]");
 
-        //TextView textView = findViewById(R.id.selectedEntryText);
         StringBuilder displayText = new StringBuilder();
 
 
@@ -86,9 +86,8 @@ public class CalendarActivity extends AppCompatActivity {
                 String weather   = entry.optString("weather");
                 String moodInput = entry.optString("moodInput");
 
-                int iconRes = R.drawable.excited_icon; // fallback
+                int iconRes = R.drawable.excited_icon;
 
-                // Set the appropriate icon based on the mood
                 switch (moodKey.toLowerCase()) {
                     case "excited":
                         iconRes = R.drawable.excited_icon;
@@ -107,59 +106,99 @@ public class CalendarActivity extends AppCompatActivity {
                         break;
                 }
 
-                // Check if the timestamp matches the selected date
                 if (timestamp.startsWith(formatDateForTimestamp(selectedDate))) {
                     LayoutInflater inflater = LayoutInflater.from(this);
                     Button moodButton = (Button) inflater.inflate(R.layout.mood_button, null, false);
 
-                    // Format the time (removes seconds)
                     String[] timeParts = timestamp.split(" ")[3].split(":");
                     String timeWithoutSeconds = timeParts[0] + ":" + timeParts[1];
-                    String time = timeWithoutSeconds + " " + timestamp.split(" ")[4];  // AM/PM part
+                    String time = timeWithoutSeconds + " " + timestamp.split(" ")[4];
 
-                    // Set the button text
                     moodButton.setText("You felt " + moodKey.toLowerCase() + " at " + time);
 
-                    // Set the icon for the button
                     Drawable icon = ContextCompat.getDrawable(this, iconRes);
                     if (icon != null) {
-                        icon.setBounds(0, 0, 150, 150); // Resize icon if necessary
-                        moodButton.setCompoundDrawables(icon, null, null, null); // Set icon to the left
+                        icon.setBounds(0, 0, 150, 150);
+                        moodButton.setCompoundDrawables(icon, null, null, null);
                     }
 
-                    // Set up the button click listener to show full mood history
                     moodButton.setOnClickListener(v -> {
-                        String fullHistory = "🕒 " + timestamp + "\n"
-                                + "Mood: " + moodKey + "\n"
-                                + "Note: " + moodInput + "\n"
-                                + "Weather: " + weather + "\n";
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        View dialogView = inflater.inflate(R.layout.dialog_mood_log, null);
 
-                        // Show the full history - for example, using a Toast
-                        Toast.makeText(this, fullHistory, Toast.LENGTH_LONG).show();
+                        TextView dialogTitle = dialogView.findViewById(R.id.dialogTitle);
+                        TextView dialogContent = dialogView.findViewById(R.id.dialogContent);
+                        EditText editMoodInput = dialogView.findViewById(R.id.editMoodInput);
+                        Button editButton = dialogView.findViewById(R.id.editButton);
+
+                        String fullHistory = "Weather: " + weather + "\n" + "Mood: " + moodKey + "\n";
+
+                        dialogTitle.setText(timestamp);
+                        dialogContent.setText(fullHistory);
+                        editMoodInput.setText(moodInput);
+                        editMoodInput.setEnabled(false);
+
+                        builder.setView(dialogView);
+                        builder.setNegativeButton("Close", null);
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+
+                        editButton.setOnClickListener(view -> {
+                            if (!editMoodInput.isEnabled()) {
+                                editMoodInput.setEnabled(true);
+                                editMoodInput.requestFocus();
+                                editButton.setText("Save");
+                            } else {
+                                String newInput = editMoodInput.getText().toString();
+
+                                try {
+                                    SharedPreferences.Editor editor = prefs.edit();
+                                    for (int j = 0; j < historyArray.length(); j++) {
+                                        JSONObject obj = historyArray.getJSONObject(j);
+                                        if (obj.optString("timestamp").equals(timestamp)) {
+                                            obj.put("moodInput", newInput);
+                                            break;
+                                        }
+                                    }
+                                    editor.putString("history", historyArray.toString());
+                                    editor.apply();
+
+                                    Toast.makeText(this, "Note updated!", Toast.LENGTH_SHORT).show();
+                                    editMoodInput.setEnabled(false);
+                                    editButton.setText("Edit log");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(this, "Failed to update note.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                        });
+
+                        ImageButton closeButton = dialogView.findViewById(R.id.closeButton);
+
+                        closeButton.setOnClickListener(editV -> {
+                            dialog.dismiss();
+                        });
                     });
 
-                    // Set layout parameters for button
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,  // Full width
-                            LinearLayout.LayoutParams.WRAP_CONTENT  // Button height
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
                     );
-                    params.setMargins(50, 10, 50, 10); // Add some margins
+                    params.setMargins(50, 10, 50, 10);
 
-                    // Apply layout params to the button
                     moodButton.setLayoutParams(params);
 
-                    // Add the button to the layout
                     historyLayout.addView(moodButton);
                 }
             }
 
-            // If no buttons were added, show a message
             if (historyLayout.getChildCount() == 0) {
                 displayText.append("No mood logs for ").append(selectedDate);
             }
 
         } catch (JSONException e) {
-            // Handle errors if parsing the JSON fails
             displayText.append("Error reading mood history.");
         }
 
@@ -167,7 +206,6 @@ public class CalendarActivity extends AppCompatActivity {
 
 
     private String formatDateForTimestamp(String yyyyMMdd) {
-        // Convert "2025-05-01" -> "May 1, 2025" to match your SharedPref timestamp format
         String[] parts = yyyyMMdd.split("-");
         int year = Integer.parseInt(parts[0]);
         int month = Integer.parseInt(parts[1]) - 1;
