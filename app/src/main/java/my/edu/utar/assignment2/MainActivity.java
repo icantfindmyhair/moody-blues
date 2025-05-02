@@ -94,11 +94,21 @@ public class MainActivity extends AppCompatActivity {
                         Glide.with(MainActivity.this).load(iconURL).into(weatherIcon);
 
                         btnMusic.setOnClickListener(view -> {
-                            String mainWeather = weather.weather.get(0).main;
-                            Intent intent = new Intent(MainActivity.this, GeneratingPlaylistActivity.class);
-                            intent.putExtra("EXTRA_WEATHER_MAIN",mainWeather);
-                            intent.putExtra("isWeatherPlaylist",true);
-                            startActivity(intent);
+
+                            YesNoDialogBox.show(
+                                    MainActivity.this,
+                                    "Weather update: " + description,
+                                    "Feeling Moody because of the weather?",
+                                    "Mhm","Not really",
+                                    yesView -> {
+                                        String mainWeather = weather.weather.get(0).main;
+                                        Intent intent = new Intent(MainActivity.this, GeneratingPlaylistActivity.class);
+                                        intent.putExtra("EXTRA_WEATHER_MAIN",mainWeather);
+                                        intent.putExtra("isWeatherPlaylist",true);
+                                        startActivity(intent);
+                                    },
+                                    noView -> closeContextMenu()
+                            );
                         });
                     }
                     else {
