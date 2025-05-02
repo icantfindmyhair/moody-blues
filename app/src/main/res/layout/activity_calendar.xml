@@ -24,18 +24,50 @@
             android:layout_height="70dp" />
     </LinearLayout>
 
-    <com.applandeo.materialcalendarview.CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="300dp"
-        android:layout_height="400dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
-        app:headerLabelColor="#444054"
-        app:maximumDaysRange="31"
-        app:selectionBetweenMonthsEnabled="true"
-        app:swipeEnabled="true"
-        app:todayLabelColor="#0000ff" />
+
+        <LinearLayout
+            android:id="@+id/historyLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.applandeo.materialcalendarview.CalendarView
+                android:id="@+id/calendarView"
+                android:layout_marginTop="10dp"
+                android:layout_width="300dp"
+                android:layout_height="400dp"
+                android:layout_gravity="center_horizontal"
+                app:headerLabelColor="#444054"
+                app:maximumDaysRange="31"
+                app:selectionBetweenMonthsEnabled="true"
+                app:swipeEnabled="true"
+                app:todayLabelColor="#ff00ff"
+                >
+
+            </com.applandeo.materialcalendarview.CalendarView>
+
+            <TextView
+                android:id="@+id/selectedDateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selected Date: "
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"/>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="16dp">
+
+                <LinearLayout
+                    android:id="@+id/logButtonsLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+            </ScrollView>
+
+        </LinearLayout>
+
 </RelativeLayout>
