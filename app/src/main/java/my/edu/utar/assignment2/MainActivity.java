@@ -70,10 +70,12 @@ public class MainActivity extends AppCompatActivity {
         TextView weatherTemp = findViewById(R.id.weatherTempText);
         ImageView weatherIcon = findViewById(R.id.weatherIcon);
         TextView weatherName = findViewById(R.id.weatherName);
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.openweathermap.org/data/2.5/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
         WeatherService service = retrofit.create(WeatherService.class);
         Call<WeatherResponse> call = service.getCurrentWeather("Kampar","35b04f55b9246cc3c767a61402f3f868","metric");
         call.enqueue(new Callback<WeatherResponse>() {
@@ -81,15 +83,22 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<WeatherResponse> call, Response<WeatherResponse> response) {
                 if (response.isSuccessful()){
                     WeatherResponse weather = response.body();
-                    if (weather!=null){
+                    if (weather!=null && !weather.weather.isEmpty()){
                         int temp = (int) Math.round(weather.main.temp);
                         weatherTemp.setText(temp + "°C");
                         String description = weather.weather.get(0).description;
-                        //String weatherInfo = "Weather: " + description + "," + temp + "C";
                         weatherName.setText(description);
                         String iconCode = weather.weather.get(0).icon;
                         String iconURL = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
                         Glide.with(MainActivity.this).load(iconURL).into(weatherIcon);
+
+                        weatherIcon.setOnClickListener(view -> {
+                            String mainWeather = weather.weather.get(0).main;
+                            Intent intent = new Intent(MainActivity.this, GeneratingPlaylistActivity.class);
+                            intent.putExtra("EXTRA_WEATHER_MAIN",mainWeather);
+                            intent.putExtra("isWeatherPlaylist",true);
+                            startActivity(intent);
+                        });
                     }
                     else {
                         weatherName.setText("Failed to get weather.");
