@@ -12,5 +12,6 @@ public class WeatherResponse {
 
     public class Weather{
         public String description;
+        public String icon;
     }
 }

@@ -58,8 +58,21 @@
 
     <!-- Weather -->
     <TextView
-        android:id="@+id/weatherText"
-        android:text="Weather: --"
+        android:id="@+id/weatherTempText"
+        android:text="Temperature"
+        android:textSize="48sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/weatherIcon"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:contentDescription="WeatherIcon" />
+
+    <TextView
+        android:id="@+id/weatherName"
+        android:text="Weather Name"
         android:textSize="16sp"
         android:layout_marginBottom="32dp"
         android:layout_width="wrap_content"

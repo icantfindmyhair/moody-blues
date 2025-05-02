@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
 
 import java.util.Calendar;
 
@@ -64,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         //WeatherAPI
-        TextView weatherText = findViewById(R.id.weatherText);
+        TextView weatherTemp = findViewById(R.id.weatherTempText);
+        ImageView weatherIcon = findViewById(R.id.weatherIcon);
+        TextView weatherName = findViewById(R.id.weatherName);
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.openweathermap.org/data/2.5/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -77,13 +82,17 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
                     WeatherResponse weather = response.body();
                     if (weather!=null){
-                        double temp = weather.main.temp;
+                        int temp = (int) Math.round(weather.main.temp);
+                        weatherTemp.setText(temp + "°C");
                         String description = weather.weather.get(0).description;
-                        String weatherInfo = "Weather: " + description + "," + temp + "C";
-                        weatherText.setText(weatherInfo);
+                        //String weatherInfo = "Weather: " + description + "," + temp + "C";
+                        weatherName.setText(description);
+                        String iconCode = weather.weather.get(0).icon;
+                        String iconURL = "https://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+                        Glide.with(MainActivity.this).load(iconURL).into(weatherIcon);
                     }
                     else {
-                        weatherText.setText("Failed to get weather.");
+                        weatherName.setText("Failed to get weather.");
                     }
                 }
             }
@@ -91,24 +100,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<WeatherResponse> call, Throwable t) {
                 Log.e("Weather","Error: " + t.getMessage());
-                weatherText.setText("Error loading weather.");
+                weatherName.setText("Error loading weather.");
             }
         });
 
         btnExcited.setOnClickListener(v ->
-                openMoodLoggingActivity(R.drawable.excited_icon, "Yippee! :D", "excited", weatherText.getText().toString())
+                openMoodLoggingActivity(R.drawable.excited_icon, "Yippee! :D", "excited", weatherName.getText().toString())
         );
         btnHappy.setOnClickListener(v ->
-                openMoodLoggingActivity(R.drawable.happy_icon, "Yay! :)", "happy", weatherText.getText().toString())
+                openMoodLoggingActivity(R.drawable.happy_icon, "Yay! :)", "happy", weatherName.getText().toString())
         );
         btnMeh.setOnClickListener(v ->
-                openMoodLoggingActivity(R.drawable.meh_icon, "Meh :/", "meh", weatherText.getText().toString())
+                openMoodLoggingActivity(R.drawable.meh_icon, "Meh :/", "meh", weatherName.getText().toString())
         );
         btnSad.setOnClickListener(v ->
-                openMoodLoggingActivity(R.drawable.sad_icon, "Awwww :(", "sad", weatherText.getText().toString())
+                openMoodLoggingActivity(R.drawable.sad_icon, "Awwww :(", "sad", weatherName.getText().toString())
         );
         btnUpset.setOnClickListener(v ->
-                openMoodLoggingActivity(R.drawable.upset_icon, "Oh no :(", "upset", weatherText.getText().toString())
+                openMoodLoggingActivity(R.drawable.upset_icon, "Oh no :(", "upset", weatherName.getText().toString())
         );
 
         ImageButton btnCalendar = findViewById(R.id.btnCalendar);
