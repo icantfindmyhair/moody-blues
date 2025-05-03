@@ -37,7 +37,6 @@ public class MoodLogging extends AppCompatActivity {
         moodText   = findViewById(R.id.moodText);
         doneButton = findViewById(R.id.doneButton);
 
-        // Pre-fill UI
         int iconResId = getIntent().getIntExtra("mood_icon", R.drawable.excited_icon);
         String text   = getIntent().getStringExtra("mood_text");
         moodIcon.setImageResource(iconResId);

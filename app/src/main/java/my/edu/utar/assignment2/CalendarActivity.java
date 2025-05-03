@@ -164,12 +164,12 @@ public class CalendarActivity extends AppCompatActivity {
                                     editor.putString("history", historyArray.toString());
                                     editor.apply();
 
-                                    Toast.makeText(this, "Note updated!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(this, "Mood log updated!", Toast.LENGTH_SHORT).show();
                                     editMoodInput.setEnabled(false);
                                     editButton.setText("Edit log");
                                 } catch (JSONException e) {
                                     e.printStackTrace();
-                                    Toast.makeText(this, "Failed to update note.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(this, "Failed to update mood log.", Toast.LENGTH_SHORT).show();
                                 }
                             }
 
