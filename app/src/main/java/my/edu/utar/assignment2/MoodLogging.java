@@ -75,7 +75,7 @@ public class MoodLogging extends AppCompatActivity {
                     .putString("history", arr.toString())
                     .apply();
 
-            //Yes/No dialog exactly as before
+            //Yes/No dialog
             YesNoDialogBox.show(
                     MoodLogging.this,
                     "Mood recorded!",
