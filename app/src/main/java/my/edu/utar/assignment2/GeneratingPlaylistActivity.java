@@ -204,7 +204,7 @@ public class GeneratingPlaylistActivity extends AppCompatActivity {
         Map<String, List<String>> map = new HashMap<>();
         map.put("excited", Arrays.asList("exciting","electronic","hype","adrenaline","energetic","upbeat","party"));
         map.put("happy",   Arrays.asList("happy","uplifting","feel-good","joyful","bright","cheerful","sunshine"));
-        map.put("meh",     Arrays.asList("chill","vibes","lo-fi","mellow","relaxing","downtempo","laid-back"));
+        map.put("meh",     Arrays.asList("chill","vibes","lo-fi","mellow","relaxing"));
         map.put("sad",     Arrays.asList("sad","melancholy","acoustic","soulful","heartbreak","emotional","blues"));
         map.put("upset",   Arrays.asList("angry","intense","rock","aggressive","punk","rebellion","revenge"));
         return map.getOrDefault(mood, Arrays.asList(mood));
